@@ -1,0 +1,128 @@
+---
+title: "BIOINF3005"
+author: "Ben Barry"
+date: "2024-10-17"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load packages}
+library(stringr)
+```
+
+```{r}
+hi <- c("Hi Mum", "Hi Mother")
+
+#convert to lower case
+str_to_lower(hi)
+#convert to upper case
+str_to_upper(hi)
+#convert to sentence
+str_to_sentence(hi)
+```
+
+```{r}
+#remove captial M or lower case m from hi
+str_remove_all(hi, "[Mm]")
+#reomve all vowels
+str_remove_all(hi, "[aeiou]")
+
+#remove "Mu"
+str_remove_all(hi, "Mu")
+
+#Remove anything that directly follows M too
+str_remove_all(hi, "M.")
+
+```
+
+
+```{r extracting patterns}
+#extract "Mu"
+str_extract(hi, "Mu")
+#extract anthying which follows M
+str_extract(hi, "M.+")
+
+str_sub(hi, start = 4, end = 5)
+
+```
+
+```{r replacing text}
+#replace anthing that starts with "M" with dad
+str_replace(hi, "M.+", "Dad")
+
+#replace Mum or Mother with dad
+str_replace(hi, "Mum|Mother", "Dad")
+
+#replace the white space too
+str_replace(hi, " (M.+)", "! We captured and replaced the pattern \\1.")
+
+# add "Hi" after anthing which starts with "M"
+str_replace(hi, "(Hi) (M.+)", "\\2! \\1!")
+
+# replace the first appreance of M or m with "b"
+str_replace(hi, "[Mm]", "b")
+
+#replace all appearances of M or m with "b"
+str_replace_all(hi, "[Mm]", "b")
+```
+
+
+```{r a few more handy funcutions}
+#make the strings the same length adding "!" to the right side of the text
+str_pad(hi, width = 10, side = "right", pad = "!")
+
+#make all digets 2 wind by adding a 0
+str_pad(1:10, width = 2, pad = "0")
+
+#shorten hi to 6 characters
+str_trunc(hi, width = 6)
+
+#remove leading or trailing white spaces
+str_trim("  Hi!")
+```
+
+```{r finding matching text}
+#logial test to detect if "Mum" is in the string
+str_detect(hi, "Mum")
+#invert answer eg. "TRUE" means it is not there
+str_detect(hi, "Mum", negate = TRUE)
+
+#does the string start with "Hi"
+str_starts(hi, "Hi")
+
+#does the string end with "m"?
+str_ends(hi, "m")
+
+#subset the string to find string which contains "Mum"
+str_subset(hi, "Mum")
+#subset the string to find string which contains "M" followed by anthing.
+str_subset(hi, "M.+")
+
+str_view(hi, "M.+")
+```
+
+
+```{r counting letters}
+str_length(hi)
+#count the number of apperances of H or h in the strings
+str_count(hi, "[Hh]")
+str_count("ACGTCGCGATTTAGC", "[GC]")
+```
+
+```{r collapsing and joing text}
+# collapse the strings into one string sepparated by a comma
+str_flatten(hi, collapse = ", ")
+#smae but using base r 
+paste(hi, collapse = ", ")
+
+# add a new string to the orrignal
+paste(hi, "I hope youre well.", sep = ", ")
+#same but uses' sep = "" as the defult 
+paste0(hi, "!")
+
+#create a matrix for where the pattern = a space (" ") 
+str_split_fixed(hi, " ", 2)
+```
